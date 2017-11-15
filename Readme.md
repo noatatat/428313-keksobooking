@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Владимир Воробьев](https://up.htmlacademy.ru/javascript/11/user/428313).
-* Наставник: `Неизвестно`.
+* Наставник: [Денис Верхотуров](https://up.htmlacademy.ru/htmlcss/18/user/56756).
 
 ---
 
