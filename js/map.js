@@ -110,16 +110,12 @@ mapPinsBlock.appendChild(fragmentPins);
 var newFeatures = function (nodeName, advertisement) {
   var featureList = nodeName.querySelector('.popup__features');
   var features = nodeName.querySelectorAll('.popup__features .feature');
-  for (var ii = 1; ii < features.length; ii++) {
-    featureList.removeChild(features[ii]);
-  }
-  featureList = nodeName.querySelector('.popup__features');
-  var feature = nodeName.querySelector('.popup__features .feature');
-  var advertisementValueList = advertisement.offer.features;
-  feature.classList = 'feature feature--' + advertisementValueList[0];
-  for (var jj = 1; jj < advertisementValueList.length; jj++) {
-    featureList.appendChild(feature.cloneNode(true));
-    feature.classList = 'feature feature--' + advertisementValueList[jj];
+  for (var k = 0; k < features.length; k++) {
+    if (advertisement.offer.features[k]) {
+      features[k].classList = 'feature feature--' + advertisement.offer.features[k];
+    } else {
+      featureList.removeChild(features[k]);
+    }
   }
   return nodeName;
 };
