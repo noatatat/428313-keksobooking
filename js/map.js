@@ -95,7 +95,7 @@ var mapCardTemplate = document.querySelector('template').content.querySelector('
 var createMapPin = function (advertisement) {
   var mapPin = mapPinTemplate.cloneNode(true);
   var x = advertisement.location.x - pinWidth / 2;
-  var y = advertisement.location.y + pinHeight;
+  var y = advertisement.location.y - pinHeight;
   mapPin.style = 'left: ' + x + 'px; top: ' + y + 'px;';
   mapPin.querySelector('img').src = advertisement.author.avatar;
   return mapPin;
