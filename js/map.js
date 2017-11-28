@@ -6,23 +6,33 @@ var offerTitles = ['Большая уютная квартира', 'Малень
   'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var offerTypes = ['flat', 'house', 'bungalo'];
 var offerTypeName = {flat: 'Квартира', bungalo: 'Бунгало', house: 'Дом'};
-var offerCheckin = ['12:00', '13:00', '14:00'];
-var offerCheckout = ['12:00', '13:00', '14:00'];
+var offerCheckins = ['12:00', '13:00', '14:00'];
+var offerCheckouts = ['12:00', '13:00', '14:00'];
 var featureItems = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var pinWidth = 40;
 var pinHeight = 52;
+var maxPrice = 1000;
+var minPrice = 10000000;
+var maxRooms = 5;
+var maxGuests = 50;
 
-var getRandomInteger = function (min, max) {
+function getRandom(min, max) {
   if (!max) {
     max = min;
     min = 0;
   }
-  var rand = min + Math.random() * (max + 1 - min);
-  rand = Math.floor(rand);
-  return rand;
-};
+  return min + Math.random() * (max - min);
+}
 
-var createShuffledArray = function (arrayLength) {
+function getRandomInteger(min, max) {
+  return Math.floor(getRandom(min, max));
+}
+
+function getRandomElement(elements) {
+  return elements[getRandomInteger(elements.length)];
+}
+
+function createShuffledArray(arrayLength) {
   var temporaryValue;
   var randomIndex;
   var array = [];
@@ -31,7 +41,6 @@ var createShuffledArray = function (arrayLength) {
     array.push(i);
   }
   var currentIndex = array.length - 1;
-
   while (currentIndex !== 0) {
     randomIndex = getRandomInteger(currentIndex);
     currentIndex -= 1;
@@ -40,32 +49,32 @@ var createShuffledArray = function (arrayLength) {
     array[randomIndex] = temporaryValue;
   }
   return array;
-};
+}
 
-var createFeatureList = function () {
+function createFeatureList() {
   var array = [];
-  var size = getRandomInteger(1, featureItems.length);
+  var size = getRandomInteger(1, featureItems.length + 1);
   var shuffledArray = createShuffledArray(featureItems.length);
   for (var i = 0; i < size; i++) {
     array[i] = featureItems[shuffledArray[i]];
   }
   return array;
-};
+}
 
-var createAdvertisement = function (avatarValue, offerValue, locationX, locationY) {
-  var advertisement = {
+function createAdvertisement(avatarValue, offerValue, locationX, locationY) {
+  return {
     author: {
       avatar: 'img/avatars/user0' + avatarValue + '.png'
     },
     offer: {
       title: offerTitles[offerValue],
       address: locationX + ', ' + locationY,
-      price: getRandomInteger(1000, 10000000),
-      type: offerTypes[getRandomInteger(offerTypes.length - 1)],
-      rooms: getRandomInteger(1, 5),
-      guests: getRandomInteger(1, 50),
-      checkin: offerCheckin[getRandomInteger(offerCheckin.length - 1)],
-      checkout: offerCheckout[getRandomInteger(offerCheckout.length - 1)],
+      price: getRandomInteger(minPrice, maxPrice + 1),
+      type: getRandomElement(offerTypes),
+      rooms: getRandomInteger(1, maxRooms + 1),
+      guests: getRandomInteger(1, maxGuests + 1),
+      checkin: getRandomElement(offerCheckins),
+      checkout: getRandomElement(offerCheckouts),
       features: createFeatureList(),
       description: '',
       photos: []
@@ -75,8 +84,7 @@ var createAdvertisement = function (avatarValue, offerValue, locationX, location
       y: locationY
     }
   };
-  return advertisement;
-};
+}
 
 var advertisements = [];
 var avatarValues = createShuffledArray(advertisementsNumber);
@@ -92,14 +100,14 @@ var mapBlock = document.querySelector('.map');
 var mapPinTemplate = document.querySelector('template').content.querySelector('.map__pin');
 var mapCardTemplate = document.querySelector('template').content.querySelector('.map__card');
 
-var createMapPin = function (advertisement) {
+function createMapPin(advertisement) {
   var mapPin = mapPinTemplate.cloneNode(true);
   var x = advertisement.location.x - pinWidth / 2;
   var y = advertisement.location.y - pinHeight;
   mapPin.style = 'left: ' + x + 'px; top: ' + y + 'px;';
   mapPin.querySelector('img').src = advertisement.author.avatar;
   return mapPin;
-};
+}
 
 var fragmentPins = document.createDocumentFragment();
 for (var j = 0; j < advertisementsNumber; j++) {
@@ -107,7 +115,7 @@ for (var j = 0; j < advertisementsNumber; j++) {
 }
 mapPinsBlock.appendChild(fragmentPins);
 
-var newFeatures = function (nodeName, advertisement) {
+function newFeatures(nodeName, advertisement) {
   var featureList = nodeName.querySelector('.popup__features');
   var features = nodeName.querySelectorAll('.popup__features .feature');
   for (var k = 0; k < features.length; k++) {
@@ -118,21 +126,23 @@ var newFeatures = function (nodeName, advertisement) {
     }
   }
   return nodeName;
-};
+}
 
-var createMapCard = function (advertisement) {
+function createMapCard(advertisement) {
   var mapCard = mapCardTemplate.cloneNode(true);
   mapCard.querySelector('h3').textContent = advertisement.offer.title;
   mapCard.querySelector('p small').textContent = advertisement.offer.address;
   mapCard.querySelector('.popup__price').textContent = advertisement.offer.price + '\u20bd/ночь';
   mapCard.querySelector('h4').textContent = offerTypeName[advertisement.offer.type];
-  mapCard.querySelector('p:nth-of-type(3)').textContent = advertisement.offer.rooms + ' комнаты для ' + advertisement.offer.guests + ' гостей';
-  mapCard.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
+  mapCard.querySelector('p:nth-of-type(3)').textContent = advertisement.offer.rooms + ' комнаты для '
+    + advertisement.offer.guests + ' гостей';
+  mapCard.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + advertisement.offer.checkin
+    + ', выезд до ' + advertisement.offer.checkout;
   mapCard.querySelector('p:last-of-type').textContent = advertisement.offer.description;
   mapCard.querySelector('.popup__avatar').src = advertisement.author.avatar;
   newFeatures(mapCard, advertisement);
   return mapCard;
-};
+}
 
 var fragmentCards = document.createDocumentFragment();
 fragmentCards.appendChild(createMapCard(advertisements[0]));
