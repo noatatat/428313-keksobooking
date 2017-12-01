@@ -148,4 +148,19 @@ var fragmentCards = document.createDocumentFragment();
 fragmentCards.appendChild(createMapCard(advertisements[0]));
 mapBlock.insertBefore(fragmentCards, document.querySelector('.map__filters-container'));
 
-document.querySelector('.map').classList.remove('map--faded');
+function operateEachInArray(array, flag) {
+  for (var ii = 0; ii < array.length - 1; ii++) {
+    array[ii].disabled = flag;
+  }
+}
+
+var formFieldsets = document.querySelectorAll('.notice fieldset');
+operateEachInArray(formFieldsets, true);
+
+var mapPinMain = mapBlock.querySelector('.map__pin--main');
+var noticeForm = document.querySelector('.notice__form');
+mapPinMain.addEventListener('mouseup', function () {
+  mapBlock.classList.remove('map--faded');
+  noticeForm.classList.remove('notice__form--disabled');
+  operateEachInArray(formFieldsets, false);
+});
