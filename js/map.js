@@ -208,3 +208,61 @@ var popups = mapBlock.querySelectorAll('.popup');
 for (var jj = 0; jj < pins.length; jj++) {
   pins[jj].addEventListener('click', onPinClick);
 }
+
+var titleInput = noticeForm.querySelector('#title');
+titleInput.addEventListener('invalid', onTitleValidate);
+function onTitleValidate() {
+  if (titleInput.validity.tooShort) {
+    titleInput.setCustomValidity('Слишком короткий заголовок');
+  } else if (titleInput.validity.tooShort) {
+    titleInput.setCustomValidity('Слишком длинный заголовок');
+  } else if (titleInput.validity.valueMissing) {
+    titleInput.setCustomValidity('Обязательное поле');
+  }
+}
+
+var timeInSelect = noticeForm.querySelector('#timein');
+var timeOutSelect = noticeForm.querySelector('#timeout');
+timeInSelect.addEventListener('change', onTimeInSelectChangeInTimeOut);
+function onTimeInSelectChangeInTimeOut() {
+  timeOutSelect.options.selectedIndex = timeInSelect.options.selectedIndex;
+}
+timeOutSelect.addEventListener('change', onTimeOutSelectChangeInTimeIn);
+function onTimeOutSelectChangeInTimeIn() {
+  timeInSelect.options.selectedIndex = timeOutSelect.options.selectedIndex;
+}
+
+function getValue(selectName, i3) {
+  return selectName.options[i3].value;
+}
+
+var typeSelect = noticeForm.querySelector('#type');
+var priceInput = noticeForm.querySelector('#price');
+var offerTypeMinPrices = {flat: 1000, bungalo: 0, house: 5000, palace: 10000};
+typeSelect.addEventListener('change', onTypeSelectChangeMinPrice);
+function onTypeSelectChangeMinPrice() {
+  var index = typeSelect.options.selectedIndex;
+  var type = getValue(typeSelect, index);
+  priceInput.min = offerTypeMinPrices[type];
+}
+
+var roomNumberSelect = noticeForm.querySelector('#room_number');
+var capacity = noticeForm.querySelector('#capacity');
+roomNumberSelect.addEventListener('change', onRoomNumberSelectChangeCapacity);
+function onRoomNumberSelectChangeCapacity() {
+  var index = roomNumberSelect.options.selectedIndex;
+  var roomNumber = Number(getValue(roomNumberSelect, index));
+  if ((roomNumber >= 1) && (roomNumber <= 3)) {
+    capacity.options.selectedIndex = getCapacityOptionIndex(roomNumber);
+  } else if (roomNumber === 100) {
+    capacity.options.selectedIndex = getCapacityOptionIndex(0);
+  }
+}
+function getCapacityOptionIndex(x) {
+  for (var i4 = 0; i4 < capacity.options.length; i4++) {
+    if (capacity.options[i4].value === String(x)) {
+      var capacityIndex = i4;
+    }
+  }
+  return capacityIndex;
+}
