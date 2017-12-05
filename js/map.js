@@ -13,40 +13,50 @@ var FEATURE_ITEMS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'con
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 52;
 
-var getRandomInteger = function (min, max) {
-  if (!max) {
-    max = min;
-    min = 0;
-  }
-  var rand = min + Math.random() * (max + 1 - min);
-  rand = Math.floor(rand);
-  return rand;
-};
+(function () {
+  window.random = {
+    getRandom: function (min, max) {
+      if (!max) {
+        max = min;
+        min = 0;
+      }
+      return min + Math.random() * (max - min);
+    },
 
-var createShuffledArray = function (arrayLength) {
-  var temporaryValue;
-  var randomIndex;
-  var array = [];
+    getRandomInteger: function (min, max) {
+      return Math.floor(window.random.getRandom(min, max));
+    },
 
-  for (var i = 0; i < arrayLength; i++) {
-    array.push(i);
-  }
-  var currentIndex = array.length - 1;
+    getRandomElement: function (elements) {
+      return elements[window.random.getRandomInteger(elements.length)];
+    },
 
-  while (currentIndex !== 0) {
-    randomIndex = getRandomInteger(currentIndex);
-    currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-};
+    createShuffledArray: function (arrayLength) {
+      var temporaryValue;
+      var randomIndex;
+      var array = [];
+
+      for (var i = 0; i < arrayLength; i++) {
+        array.push(i);
+      }
+      var currentIndex = array.length - 1;
+
+      while (currentIndex !== 0) {
+        randomIndex = window.random.getRandomInteger(currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+  };
+})();
 
 var createFeatureList = function () {
   var array = [];
-  var size = getRandomInteger(1, FEATURE_ITEMS.length);
-  var shuffledArray = createShuffledArray(FEATURE_ITEMS.length);
+  var size = window.random.getRandomInteger(1, FEATURE_ITEMS.length);
+  var shuffledArray = window.random.createShuffledArray(FEATURE_ITEMS.length);
   for (var i = 0; i < size; i++) {
     array[i] = FEATURE_ITEMS[shuffledArray[i]];
   }
@@ -61,12 +71,12 @@ var createAdvertisement = function (avatarValue, offerValue, locationX, location
     offer: {
       title: OFFER_TITLES[offerValue],
       address: locationX + ', ' + locationY,
-      price: getRandomInteger(1000, 10000000),
-      type: OFFER_TYPES[getRandomInteger(OFFER_TYPES.length - 1)],
-      rooms: getRandomInteger(1, 5),
-      guests: getRandomInteger(1, 50),
-      checkin: OFFER_CHECKIN_OPTIONS[getRandomInteger(OFFER_CHECKIN_OPTIONS.length - 1)],
-      checkout: OFFER_CHECKOUT_OPTIONS[getRandomInteger(OFFER_CHECKOUT_OPTIONS.length - 1)],
+      price: window.random.getRandomInteger(1000, 10000000),
+      type: window.random.getRandomElement(OFFER_TYPES),
+      rooms: window.random.getRandomInteger(1, 5),
+      guests: window.random.getRandomInteger(1, 50),
+      checkin: window.random.getRandomElement(OFFER_CHECKIN_OPTIONS),
+      checkout: window.random.getRandomElement(OFFER_CHECKOUT_OPTIONS),
       features: createFeatureList(),
       description: '',
       photos: []
@@ -80,11 +90,11 @@ var createAdvertisement = function (avatarValue, offerValue, locationX, location
 };
 
 var advertisements = [];
-var avatarValues = createShuffledArray(ADVERTICEMENT_NUMBER);
-var offerValues = createShuffledArray(OFFER_TITLES.length);
+var avatarValues = window.random.createShuffledArray(ADVERTICEMENT_NUMBER);
+var offerValues = window.random.createShuffledArray(OFFER_TITLES.length);
 for (var i = 0; i < ADVERTICEMENT_NUMBER; i++) {
-  var locationX = getRandomInteger(300, 900);
-  var locationY = getRandomInteger(100, 500);
+  var locationX = window.random.getRandomInteger(300, 900);
+  var locationY = window.random.getRandomInteger(100, 500);
   advertisements[i] = createAdvertisement(avatarValues[i] + 1, offerValues[i], locationX, locationY);
 }
 
