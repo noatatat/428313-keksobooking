@@ -1,18 +1,17 @@
 'use strict';
 
 var ESC_KEYCODE = 27;
-
-var advertisementsNumber = 8;
-var offerTitles = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец',
+var ADVERTICEMENT_NUMBER = 8;
+var OFFER_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец',
   'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик',
   'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-var offerTypes = ['flat', 'house', 'bungalo'];
-var offerTypeName = {flat: 'Квартира', bungalo: 'Бунгало', house: 'Дом'};
-var offerCheckin = ['12:00', '13:00', '14:00'];
-var offerCheckout = ['12:00', '13:00', '14:00'];
-var featureItems = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var pinWidth = 40;
-var pinHeight = 52;
+var OFFER_TYPES = ['flat', 'house', 'bungalo'];
+var OFFER_TYPE_NAMES = {flat: 'Квартира', bungalo: 'Бунгало', house: 'Дом'};
+var OFFER_CHECKIN_OPTIONS = ['12:00', '13:00', '14:00'];
+var OFFER_CHECKOUT_OPTIONS = ['12:00', '13:00', '14:00'];
+var FEATURE_ITEMS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var PIN_WIDTH = 40;
+var PIN_HEIGHT = 52;
 
 var getRandomInteger = function (min, max) {
   if (!max) {
@@ -46,10 +45,10 @@ var createShuffledArray = function (arrayLength) {
 
 var createFeatureList = function () {
   var array = [];
-  var size = getRandomInteger(1, featureItems.length);
-  var shuffledArray = createShuffledArray(featureItems.length);
+  var size = getRandomInteger(1, FEATURE_ITEMS.length);
+  var shuffledArray = createShuffledArray(FEATURE_ITEMS.length);
   for (var i = 0; i < size; i++) {
-    array[i] = featureItems[shuffledArray[i]];
+    array[i] = FEATURE_ITEMS[shuffledArray[i]];
   }
   return array;
 };
@@ -60,14 +59,14 @@ var createAdvertisement = function (avatarValue, offerValue, locationX, location
       avatar: 'img/avatars/user0' + avatarValue + '.png'
     },
     offer: {
-      title: offerTitles[offerValue],
+      title: OFFER_TITLES[offerValue],
       address: locationX + ', ' + locationY,
       price: getRandomInteger(1000, 10000000),
-      type: offerTypes[getRandomInteger(offerTypes.length - 1)],
+      type: OFFER_TYPES[getRandomInteger(OFFER_TYPES.length - 1)],
       rooms: getRandomInteger(1, 5),
       guests: getRandomInteger(1, 50),
-      checkin: offerCheckin[getRandomInteger(offerCheckin.length - 1)],
-      checkout: offerCheckout[getRandomInteger(offerCheckout.length - 1)],
+      checkin: OFFER_CHECKIN_OPTIONS[getRandomInteger(OFFER_CHECKIN_OPTIONS.length - 1)],
+      checkout: OFFER_CHECKOUT_OPTIONS[getRandomInteger(OFFER_CHECKOUT_OPTIONS.length - 1)],
       features: createFeatureList(),
       description: '',
       photos: []
@@ -81,9 +80,9 @@ var createAdvertisement = function (avatarValue, offerValue, locationX, location
 };
 
 var advertisements = [];
-var avatarValues = createShuffledArray(advertisementsNumber);
-var offerValues = createShuffledArray(offerTitles.length);
-for (var i = 0; i < advertisementsNumber; i++) {
+var avatarValues = createShuffledArray(ADVERTICEMENT_NUMBER);
+var offerValues = createShuffledArray(OFFER_TITLES.length);
+for (var i = 0; i < ADVERTICEMENT_NUMBER; i++) {
   var locationX = getRandomInteger(300, 900);
   var locationY = getRandomInteger(100, 500);
   advertisements[i] = createAdvertisement(avatarValues[i] + 1, offerValues[i], locationX, locationY);
@@ -96,15 +95,15 @@ var mapCardTemplate = document.querySelector('template').content.querySelector('
 
 var createMapPin = function (advertisement) {
   var mapPin = mapPinTemplate.cloneNode(true);
-  var x = advertisement.location.x - pinWidth / 2;
-  var y = advertisement.location.y - pinHeight;
+  var x = advertisement.location.x - PIN_WIDTH / 2;
+  var y = advertisement.location.y - PIN_HEIGHT;
   mapPin.style = 'left: ' + x + 'px; top: ' + y + 'px;';
   mapPin.querySelector('img').src = advertisement.author.avatar;
   return mapPin;
 };
 
 var fragmentPins = document.createDocumentFragment();
-for (var j = 0; j < advertisementsNumber; j++) {
+for (var j = 0; j < ADVERTICEMENT_NUMBER; j++) {
   fragmentPins.appendChild(createMapPin(advertisements[j]));
 }
 mapPinsBlock.appendChild(fragmentPins);
@@ -128,7 +127,7 @@ var createMapCard = function (advertisement) {
   mapCard.querySelector('h3').textContent = advertisement.offer.title;
   mapCard.querySelector('p small').textContent = advertisement.offer.address;
   mapCard.querySelector('.popup__price').textContent = advertisement.offer.price + '\u20bd/ночь';
-  mapCard.querySelector('h4').textContent = offerTypeName[advertisement.offer.type];
+  mapCard.querySelector('h4').textContent = OFFER_TYPE_NAMES[advertisement.offer.type];
   mapCard.querySelector('p:nth-of-type(3)').textContent = advertisement.offer.rooms + ' комнаты для ' + advertisement.offer.guests + ' гостей';
   mapCard.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
   mapCard.querySelector('p:last-of-type').textContent = advertisement.offer.description;
@@ -138,7 +137,7 @@ var createMapCard = function (advertisement) {
 };
 
 var fragmentCards = document.createDocumentFragment();
-for (var h = 0; h < advertisementsNumber; h++) {
+for (var h = 0; h < ADVERTICEMENT_NUMBER; h++) {
   fragmentCards.appendChild(createMapCard(advertisements[h]));
 }
 mapBlock.insertBefore(fragmentCards, document.querySelector('.map__filters-container'));
