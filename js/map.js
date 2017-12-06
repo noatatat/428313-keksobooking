@@ -223,15 +223,27 @@
 
 (function () {
   var titleInput = window.noticeForm.querySelector('#title');
+  var adressInput = window.noticeForm.querySelector('#address');
   titleInput.addEventListener('invalid', onTitleValidate);
-
+  adressInput.addEventListener('invalid', onAdressValidate);
   function onTitleValidate() {
+    titleInput.style.borderColor = 'red';
     if (titleInput.validity.tooShort) {
       titleInput.setCustomValidity('Слишком короткий заголовок');
     } else if (titleInput.validity.tooLong) {
       titleInput.setCustomValidity('Слишком длинный заголовок');
     } else if (titleInput.validity.valueMissing) {
       titleInput.setCustomValidity('Обязательное поле');
+    } else {
+      titleInput.setCustomValidity('');
+    }
+  }
+  function onAdressValidate() {
+    adressInput.style.borderColor = 'red';
+    if (adressInput.validity.valueMissing) {
+      adressInput.setCustomValidity('Обязательное поле');
+    } else {
+      titleInput.setCustomValidity('');
     }
   }
 
