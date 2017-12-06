@@ -64,7 +64,7 @@ var createFeatureList = function () {
 };
 
 var createAdvertisement = function (avatarValue, offerValue, locationX, locationY) {
-  var advertisement = {
+  return {
     author: {
       avatar: 'img/avatars/user0' + avatarValue + '.png'
     },
@@ -86,7 +86,6 @@ var createAdvertisement = function (avatarValue, offerValue, locationX, location
       y: locationY
     }
   };
-  return advertisement;
 };
 
 var advertisements = [];
@@ -153,9 +152,9 @@ for (var h = 0; h < ADVERTICEMENT_NUMBER; h++) {
 mapBlock.insertBefore(fragmentCards, document.querySelector('.map__filters-container'));
 
 function disableEachInArray(array, flag) {
-  for (var ii = 0; ii < array.length - 1; ii++) {
-    array[ii].disabled = flag;
-  }
+  array.forEach(function (element) {
+    element.disabled = flag;
+  });
 }
 
 var formFieldsets = document.querySelectorAll('.notice fieldset');
@@ -198,25 +197,23 @@ function onPopupClose() {
 }
 
 function onPinClick(evt) {
+  var current = evt.currentTarget;
+  value = [].findIndex.call(pins, function (element) {
+    return element === current;
+  });
+  openPopup(value);
   if (clickedElement) {
     clickedElement.classList.remove('map__pin--active');
   }
-
-  clickedElement = evt.currentTarget;
+  clickedElement = current;
   clickedElement.classList.add('map__pin--active');
-  for (var i2 = 0; i2 < pins.length; i2++) {
-    if (evt.currentTarget === pins[i2]) {
-      value = i2;
-    }
-  }
-  openPopup(value);
 }
 
 var pins = mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
 var popups = mapBlock.querySelectorAll('.popup');
-for (var jj = 0; jj < pins.length; jj++) {
-  pins[jj].addEventListener('click', onPinClick);
-}
+pins.forEach(function (pin) {
+  pin.addEventListener('click', onPinClick);
+});
 
 var titleInput = noticeForm.querySelector('#title');
 titleInput.addEventListener('invalid', onTitleValidate);
@@ -241,8 +238,8 @@ function onTimeOutSelectChangeInTimeIn() {
   timeInSelect.options.selectedIndex = timeOutSelect.options.selectedIndex;
 }
 
-function getValue(selectName, i3) {
-  return selectName.options[i3].value;
+function getValue(selectName, optionIndex) {
+  return selectName.options[optionIndex].value;
 }
 
 var typeSelect = noticeForm.querySelector('#type');
@@ -261,17 +258,22 @@ roomNumberSelect.addEventListener('change', onRoomNumberSelectChangeCapacity);
 function onRoomNumberSelectChangeCapacity() {
   var index = roomNumberSelect.options.selectedIndex;
   var roomNumber = Number(getValue(roomNumberSelect, index));
-  if ((roomNumber >= 1) && (roomNumber <= 3)) {
+  switch (roomNumber) {
+    case 1:
+
+    }
+}
+/*if ((roomNumber >= 1) && (roomNumber <= 3)) {
     capacity.options.selectedIndex = getCapacityOptionIndex(roomNumber);
   } else if (roomNumber === 100) {
     capacity.options.selectedIndex = getCapacityOptionIndex(0);
   }
-}
+  */
+//}
+
 function getCapacityOptionIndex(x) {
-  for (var i4 = 0; i4 < capacity.options.length; i4++) {
-    if (capacity.options[i4].value === String(x)) {
-      var capacityIndex = i4;
-    }
-  }
-  return capacityIndex;
+  var needle = String(x);
+  return [].findIndex.call(capacity, function (option) {
+    return option.value === needle;
+  });
 }
