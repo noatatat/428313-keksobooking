@@ -228,7 +228,7 @@
   function onTitleValidate() {
     if (titleInput.validity.tooShort) {
       titleInput.setCustomValidity('Слишком короткий заголовок');
-    } else if (titleInput.validity.tooShort) {
+    } else if (titleInput.validity.tooLong) {
       titleInput.setCustomValidity('Слишком длинный заголовок');
     } else if (titleInput.validity.valueMissing) {
       titleInput.setCustomValidity('Обязательное поле');
