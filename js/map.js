@@ -254,26 +254,35 @@ function onTypeSelectChangeMinPrice() {
 
 var roomNumberSelect = noticeForm.querySelector('#room_number');
 var capacity = noticeForm.querySelector('#capacity');
+capacity.options.selectedIndex = 2;
+hideOptionsAll();
 roomNumberSelect.addEventListener('change', onRoomNumberSelectChangeCapacity);
 function onRoomNumberSelectChangeCapacity() {
   var index = roomNumberSelect.options.selectedIndex;
   var roomNumber = Number(getValue(roomNumberSelect, index));
-  switch (roomNumber) {
-    case 1:
-
+  if (roomNumber === 100) {
+    hideOptionsAll();
+    hiddenOptionOff(3);
+    capacity.options.selectedIndex = 3;
+  } else {
+    hideOptionsAll();
+    if (roomNumber >= 1) {
+      hiddenOptionOff(2);
+      capacity.options.selectedIndex = 2;
     }
-}
-/*if ((roomNumber >= 1) && (roomNumber <= 3)) {
-    capacity.options.selectedIndex = getCapacityOptionIndex(roomNumber);
-  } else if (roomNumber === 100) {
-    capacity.options.selectedIndex = getCapacityOptionIndex(0);
+    if (roomNumber >= 2) {
+      hiddenOptionOff(1);
+    }
+    if (roomNumber >= 3) {
+      hiddenOptionOff(0);
+    }
   }
-  */
-//}
-
-function getCapacityOptionIndex(x) {
-  var needle = String(x);
-  return [].findIndex.call(capacity, function (option) {
-    return option.value === needle;
+}
+function hideOptionsAll() {
+  [].forEach.call(capacity, function (option) {
+    option.hidden = true;
   });
+}
+function hiddenOptionOff(optionIndex) {
+  capacity.options[optionIndex].hidden = false;
 }
