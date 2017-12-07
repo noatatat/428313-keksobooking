@@ -223,6 +223,7 @@
 
 (function () {
   var titleInput = window.noticeForm.querySelector('#title');
+  var defaultBorderColor = titleInput.style.borderColor;
   var adressInput = window.noticeForm.querySelector('#address');
   titleInput.addEventListener('invalid', onTitleValidate);
   adressInput.addEventListener('invalid', onAdressValidate);
@@ -237,6 +238,9 @@
     } else {
       titleInput.setCustomValidity('');
     }
+    if (titleInput.validity.valid) {
+      titleInput.style.borderColor = defaultBorderColor;
+    }
   }
   function onAdressValidate() {
     adressInput.style.borderColor = 'red';
@@ -244,6 +248,9 @@
       adressInput.setCustomValidity('Обязательное поле');
     } else {
       titleInput.setCustomValidity('');
+    }
+    if (adressInput.validity.valid) {
+      adressInput.style.borderColor = defaultBorderColor;
     }
   }
 
@@ -277,22 +284,18 @@
 
   var roomNumberSelect = window.noticeForm.querySelector('#room_number');
   var capacity = window.noticeForm.querySelector('#capacity');
+  hideAllExept(2);
   capacity.options.selectedIndex = 2;
-  hideOptionsAll();
   roomNumberSelect.addEventListener('change', onRoomNumberSelectChangeCapacity);
 
   function onRoomNumberSelectChangeCapacity() {
     var index = roomNumberSelect.options.selectedIndex;
     var roomNumber = Number(getValue(roomNumberSelect, index));
     if (roomNumber === 100) {
-      hideOptionsAll();
-      hiddenOptionOff(3);
-      capacity.options.selectedIndex = 3;
+      hideAllExept(3);
     } else {
-      hideOptionsAll();
       if (roomNumber >= 1) {
-        hiddenOptionOff(2);
-        capacity.options.selectedIndex = 2;
+        hideAllExept(2);
       }
       if (roomNumber >= 2) {
         hiddenOptionOff(1);
@@ -311,5 +314,11 @@
 
   function hiddenOptionOff(optionIndex) {
     capacity.options[optionIndex].hidden = false;
+  }
+
+  function hideAllExept(indexExept) {
+    hideOptionsAll();
+    hiddenOptionOff(indexExept);
+    capacity.options.selectedIndex = indexExept;
   }
 })();
