@@ -28,7 +28,7 @@
     if (adressInput.validity.valueMissing) {
       adressInput.setCustomValidity('Обязательное поле');
     } else {
-      titleInput.setCustomValidity('');
+      adressInput.setCustomValidity('');
     }
     if (adressInput.validity.valid) {
       adressInput.style.borderColor = defaultBorderColor;
