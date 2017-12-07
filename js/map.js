@@ -232,6 +232,7 @@
   var adressInput = window.noticeForm.querySelector('#address');
   titleInput.addEventListener('invalid', onTitleValidate);
   adressInput.addEventListener('invalid', onAdressValidate);
+
   function onTitleValidate() {
     titleInput.style.borderColor = 'red';
     if (titleInput.validity.tooShort) {
@@ -247,6 +248,7 @@
       titleInput.style.borderColor = defaultBorderColor;
     }
   }
+
   function onAdressValidate() {
     adressInput.style.borderColor = 'red';
     if (adressInput.validity.valueMissing) {
@@ -258,7 +260,9 @@
       adressInput.style.borderColor = defaultBorderColor;
     }
   }
+})();
 
+(function () {
   var timeInSelect = window.noticeForm.querySelector('#timein');
   var timeOutSelect = window.noticeForm.querySelector('#timeout');
   timeInSelect.addEventListener('change', onTimeInSelectChangeInTimeOut);
