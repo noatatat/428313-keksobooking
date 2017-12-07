@@ -41,7 +41,9 @@
 })();
 
 (function () {
-  window.ESC_KEYCODE = 27;
+  window.KEYCODE = {
+    ESCAPE: 27
+  };
   window.ADVERTICEMENT_NUMBER = 8;
   var OFFER_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец',
     'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик',
@@ -196,7 +198,7 @@
   }
 
   function onPopupEscPress(evt) {
-    if (evt.keyCode === window.ESC_KEYCODE) {
+    if (evt.keyCode === window.KEYCODE.ESCAPE) {
       onPopupClose();
     }
   }
