@@ -5,7 +5,7 @@
   var defaultBorderColor = titleInput.style.borderColor;
   window.adressInput = window.noticeForm.querySelector('#address');
   titleInput.addEventListener('invalid', onTitleValidate);
-  adressInput.addEventListener('invalid', onAdressValidate);
+  window.adressInput.addEventListener('invalid', onAdressValidate);
 
   function onTitleValidate() {
     titleInput.style.borderColor = 'red';
@@ -24,14 +24,14 @@
   }
 
   function onAdressValidate() {
-    adressInput.style.borderColor = 'red';
-    if (adressInput.validity.valueMissing) {
-      adressInput.setCustomValidity('Обязательное поле');
+    window.adressInput.style.borderColor = 'red';
+    if (window.adressInput.validity.valueMissing) {
+      window.adressInput.setCustomValidity('Обязательное поле');
     } else {
-      adressInput.setCustomValidity('');
+      window.adressInput.setCustomValidity('');
     }
-    if (adressInput.validity.valid) {
-      adressInput.style.borderColor = defaultBorderColor;
+    if (window.adressInput.validity.valid) {
+      window.adressInput.style.borderColor = defaultBorderColor;
     }
   }
 })();
