@@ -3,7 +3,7 @@
 (function () {
   var titleInput = window.noticeForm.querySelector('#title');
   var defaultBorderColor = titleInput.style.borderColor;
-  var adressInput = window.noticeForm.querySelector('#address');
+  window.adressInput = window.noticeForm.querySelector('#address');
   titleInput.addEventListener('invalid', onTitleValidate);
   adressInput.addEventListener('invalid', onAdressValidate);
 

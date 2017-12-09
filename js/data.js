@@ -1,10 +1,15 @@
 'use strict';
 
 (function () {
-  window.KEYCODE = {
-    ESCAPE: 27
-  };
   window.ADVERTICEMENT_NUMBER = 8;
+  window.PIN_WIDTH = 40;
+  window.PIN_HEIGHT = 52;
+  window.pinArea = {
+    minX: 300,
+    maxX: 900,
+    minY: 100,
+    maxY: 500
+  };
   var OFFER_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец',
     'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик',
     'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
@@ -53,8 +58,8 @@
   var avatarValues = window.utils.createShuffledArray(window.ADVERTICEMENT_NUMBER);
   var offerValues = window.utils.createShuffledArray(OFFER_TITLES.length);
   for (var i = 0; i < window.ADVERTICEMENT_NUMBER; i++) {
-    var locationX = window.utils.getRandomInteger(300, 900);
-    var locationY = window.utils.getRandomInteger(100, 500);
+    var locationX = window.utils.getRandomInteger(window.pinArea.minX, window.pinArea.maxX);
+    var locationY = window.utils.getRandomInteger(window.pinArea.minY, window.pinArea.maxY);
     window.advertisements[i] = createAdvertisement(avatarValues[i] + 1, offerValues[i], locationX, locationY);
   }
 })();

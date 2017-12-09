@@ -41,8 +41,36 @@
       x: endEvt.clientX - shift.x,
       y: endEvt.clientY - shift.y
     };
+
+    pinCoordsControl(coords);
     mapPinMain.style.left = coords.x + 'px';
     mapPinMain.style.top = coords.y + 'px';
+
+    window.pinCoords = {
+      x: coords.x + window.PIN_WIDTH / 2,
+      y: coords.y + window.PIN_HEIGHT
+    };
+
+    window.adressInput.value = 'x: ' + window.pinCoords.x + ', y: ' + window.pinCoords.y;
     mapPinMain.removeEventListener('dragend', onMainPinDragEnd);
+  }
+
+  function pinCoordsControl(object) {
+    var minCoordY = window.pinArea.minY - window.PIN_HEIGHT;
+    var maxCoordY = window.pinArea.maxY - window.PIN_HEIGHT;
+    var minCoordX = window.pinArea.minX - window.PIN_WIDTH / 2;
+    var maxCoordX = window.pinArea.maxX - window.PIN_WIDTH / 2;
+
+    object.x = minMax(object.x, minCoordX, maxCoordX);
+    object.y = minMax(object.y, minCoordY, maxCoordY);
+
+    function minMax(coordValue, min, max) {
+      if (coordValue < min) {
+        coordValue = min;
+      } else if (coordValue > max) {
+        coordValue = max;
+      }
+      return coordValue;
+    }
   }
 })();
