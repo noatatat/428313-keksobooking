@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  window.KEYCODE = {
+    ESCAPE: 27
+  };
   window.utils = {
     getRandom: function (min, max) {
       if (!max) {
