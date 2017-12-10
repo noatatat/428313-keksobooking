@@ -61,11 +61,11 @@
     var minCoordX = window.pinArea.minX - window.PIN_WIDTH / 2;
     var maxCoordX = window.pinArea.maxX - window.PIN_WIDTH / 2;
 
-    object.x = minMax(object.x, minCoordX, maxCoordX);
-    object.y = minMax(object.y, minCoordY, maxCoordY);
+    object.x = window.utils.minMax(object.x, minCoordX, maxCoordX);
+    object.y = window.utils.minMax(object.y, minCoordY, maxCoordY);
 
-    function minMax(coordValue, min, max) {
+/*    function minMax(coordValue, min, max) {
       return Math.max(min, Math.min(coordValue, max));
-    }
+    }*/
   }
 })();
