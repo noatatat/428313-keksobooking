@@ -65,12 +65,7 @@
     object.y = minMax(object.y, minCoordY, maxCoordY);
 
     function minMax(coordValue, min, max) {
-      if (coordValue < min) {
-        coordValue = min;
-      } else if (coordValue > max) {
-        coordValue = max;
-      }
-      return coordValue;
+      return Math.max(min, Math.min(coordValue, max));
     }
   }
 })();
