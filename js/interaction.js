@@ -16,29 +16,31 @@
     timeSynced.options.selectedIndex = timeChanged.options.selectedIndex;
   }
 
-  function getValue(selectName, optionIndex) {
-    return selectName.options[optionIndex].value;
-  }
-
   var typeSelect = window.noticeForm.querySelector('#type');
   var priceInput = window.noticeForm.querySelector('#price');
-  typeSelect.addEventListener('change', onTypeSelectChangeMinPrice);
 
-  function onTypeSelectChangeMinPrice() {
-    var index = typeSelect.options.selectedIndex;
-    var type = getValue(typeSelect, index);
-    priceInput.min = window.OFFER_TYPE_MIN_PRICES[type];
+  typeSelect.addEventListener('change', function () {
+    window.synchronizeFields(typeSelect, priceInput, syncTypeAndMinPrice);
+  });
+
+  function syncTypeAndMinPrice(typeChanged, priceSynced) {
+    var index = typeChanged.options.selectedIndex;
+    var type = window.utils.getOptionValue(typeChanged, index);
+    priceSynced.min = window.OFFER_TYPE_MIN_PRICES[type];
   }
 
   var roomNumberSelect = window.noticeForm.querySelector('#room_number');
   var capacity = window.noticeForm.querySelector('#capacity');
+
   hideAllExept(2);
   capacity.options.selectedIndex = 2;
-  roomNumberSelect.addEventListener('change', onRoomNumberSelectChangeCapacity);
+  roomNumberSelect.addEventListener('change', function () {
+    window.synchronizeFields(typeSelect, priceInput, syncRoomsAndCapacity);
+  });
 
-  function onRoomNumberSelectChangeCapacity() {
+  function syncRoomsAndCapacity() {
     var index = roomNumberSelect.options.selectedIndex;
-    var roomNumber = Number(getValue(roomNumberSelect, index));
+    var roomNumber = Number(window.utils.getOptionValue(roomNumberSelect, index));
     if (roomNumber === 100) {
       hideAllExept(3);
     } else {
