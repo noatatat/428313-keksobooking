@@ -32,8 +32,13 @@
   var roomNumberSelect = window.noticeForm.querySelector('#room_number');
   var capacity = window.noticeForm.querySelector('#capacity');
 
-  hideAllExept(2);
-  capacity.options.selectedIndex = 2;
+  window.setFormStartCondition = setFormStartCondition;
+  function setFormStartCondition() {
+    window.utils.hideAllOptionsExept(capacity, 2);
+    capacity.options.selectedIndex = 2;
+  }
+  setFormStartCondition();
+
   roomNumberSelect.addEventListener('change', function () {
     window.synchronizeFields(typeSelect, priceInput, syncRoomsAndCapacity);
   });
@@ -42,33 +47,18 @@
     var index = roomNumberSelect.options.selectedIndex;
     var roomNumber = Number(window.utils.getOptionValue(roomNumberSelect, index));
     if (roomNumber === 100) {
-      hideAllExept(3);
+      window.utils.hideAllOptionsExept(capacity, 3);
     } else {
       if (roomNumber >= 1) {
-        hideAllExept(2);
+        window.utils.hideAllOptionsExept(capacity, 2);
       }
       if (roomNumber >= 2) {
-        hiddenOptionOff(1);
+        window.utils.hiddenOptionOff(capacity, 1);
       }
       if (roomNumber >= 3) {
-        hiddenOptionOff(0);
+        window.utils.hiddenOptionOff(capacity, 0);
       }
     }
   }
 
-  function hideOptionsAll() {
-    [].forEach.call(capacity, function (option) {
-      option.hidden = true;
-    });
-  }
-
-  function hiddenOptionOff(optionIndex) {
-    capacity.options[optionIndex].hidden = false;
-  }
-
-  function hideAllExept(indexExept) {
-    hideOptionsAll();
-    hiddenOptionOff(indexExept);
-    capacity.options.selectedIndex = indexExept;
-  }
 })();
