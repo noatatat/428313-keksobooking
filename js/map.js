@@ -63,9 +63,5 @@
 
     object.x = window.utils.minMax(object.x, minCoordX, maxCoordX);
     object.y = window.utils.minMax(object.y, minCoordY, maxCoordY);
-
-/*    function minMax(coordValue, min, max) {
-      return Math.max(min, Math.min(coordValue, max));
-    }*/
   }
 })();
