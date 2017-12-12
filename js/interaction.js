@@ -3,16 +3,17 @@
 (function () {
   var timeInSelect = window.noticeForm.querySelector('#timein');
   var timeOutSelect = window.noticeForm.querySelector('#timeout');
-  timeInSelect.addEventListener('change', onTimeInSelectChangeInTimeOut);
 
-  function onTimeInSelectChangeInTimeOut() {
-    timeOutSelect.options.selectedIndex = timeInSelect.options.selectedIndex;
-  }
+  timeInSelect.addEventListener('change', function () {
+    window.synchronizeFields(timeInSelect, timeOutSelect, syncTimes);
+  });
 
-  timeOutSelect.addEventListener('change', onTimeOutSelectChangeInTimeIn);
+  timeOutSelect.addEventListener('change', function () {
+    window.synchronizeFields(timeOutSelect, timeInSelect, syncTimes);
+  });
 
-  function onTimeOutSelectChangeInTimeIn() {
-    timeInSelect.options.selectedIndex = timeOutSelect.options.selectedIndex;
+  function syncTimes(timeChanged, timeSynced) {
+    timeSynced.options.selectedIndex = timeChanged.options.selectedIndex;
   }
 
   function getValue(selectName, optionIndex) {
