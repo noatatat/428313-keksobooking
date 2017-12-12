@@ -18,7 +18,6 @@
 
   var createMapCard = function (advertisement) {
     var mapCard = mapCardTemplate.cloneNode(true);
-    mapCard.classList.add('hidden');
     mapCard.querySelector('h3').textContent = advertisement.offer.title;
     mapCard.querySelector('p small').textContent = advertisement.offer.address;
     mapCard.querySelector('.popup__price').textContent = advertisement.offer.price + '\u20bd/ночь';
@@ -31,9 +30,18 @@
     return mapCard;
   };
 
-  var fragmentCards = document.createDocumentFragment();
-  for (var h = 0; h < window.ADVERTICEMENT_NUMBER; h++) {
-    fragmentCards.appendChild(createMapCard(window.advertisements[h]));
+  window.placeMapCard = placeMapCard;
+  function placeMapCard(index) {
+    removeMapCard();
+    var newCard = createMapCard(window.advertisements[index]);
+    window.mapBlock.insertBefore(newCard, document.querySelector('.map__filters-container'));
   }
-  window.mapBlock.insertBefore(fragmentCards, document.querySelector('.map__filters-container'));
+
+  window.removeMapCard = removeMapCard;
+  function removeMapCard() {
+    var popup = window.mapBlock.querySelector('.popup');
+    if (popup) {
+      window.mapBlock.removeChild(popup);
+    }
+  }
 })();
