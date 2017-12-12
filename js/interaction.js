@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var OFFER_TYPE_MIN_PRICES = {flat: 1000, bungalo: 0, house: 5000, palace: 10000};
+
   var timeInSelect = window.noticeForm.querySelector('#timein');
   var timeOutSelect = window.noticeForm.querySelector('#timeout');
 
@@ -26,7 +28,7 @@
   function syncTypeAndMinPrice(typeChanged, priceSynced) {
     var index = typeChanged.options.selectedIndex;
     var type = window.utils.getOptionValue(typeChanged, index);
-    priceSynced.min = window.OFFER_TYPE_MIN_PRICES[type];
+    priceSynced.min = OFFER_TYPE_MIN_PRICES[type];
   }
 
   var roomNumberSelect = window.noticeForm.querySelector('#room_number');

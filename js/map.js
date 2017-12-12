@@ -1,6 +1,15 @@
 'use strict';
 
 (function () {
+  window.PIN_WIDTH = 40;
+  window.PIN_HEIGHT = 52;
+  var pinArea = {
+    minX: 300,
+    maxX: 900,
+    minY: 100,
+    maxY: 500
+  };
+
   function disableEachInArray(array, flag) {
     array.forEach(function (element) {
       element.disabled = flag;
@@ -65,10 +74,10 @@
   }
 
   function pinCoordsControl(object) {
-    var minCoordY = window.pinArea.minY - window.PIN_HEIGHT;
-    var maxCoordY = window.pinArea.maxY - window.PIN_HEIGHT;
-    var minCoordX = window.pinArea.minX - window.PIN_WIDTH / 2;
-    var maxCoordX = window.pinArea.maxX - window.PIN_WIDTH / 2;
+    var minCoordY = pinArea.minY - window.PIN_HEIGHT;
+    var maxCoordY = pinArea.maxY - window.PIN_HEIGHT;
+    var minCoordX = pinArea.minX - window.PIN_WIDTH / 2;
+    var maxCoordX = pinArea.maxX - window.PIN_WIDTH / 2;
 
     object.x = window.utils.minMax(object.x, minCoordX, maxCoordX);
     object.y = window.utils.minMax(object.y, minCoordY, maxCoordY);

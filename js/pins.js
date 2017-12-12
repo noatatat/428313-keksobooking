@@ -18,7 +18,7 @@
     };
 
     window.fragmentPins = document.createDocumentFragment();
-    for (var i = 0; i < window.ADVERTICEMENT_NUMBER; i++) {
+    for (var i = 0; i < window.advertisements.length; i++) {
       window.fragmentPins.appendChild(createMapPin(window.advertisements[i]));
     }
   }
