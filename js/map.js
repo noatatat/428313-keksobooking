@@ -13,14 +13,23 @@
   var mapPinMain = window.mapBlock.querySelector('.map__pin--main');
   window.noticeForm = document.querySelector('.notice__form');
 
-  mapPinMain.addEventListener('click', activateMap);
+  mapPinMain.addEventListener('mouseup', activateMap);
   function activateMap() {
     window.mapBlock.classList.remove('map--faded');
+    window.showPins();
     window.noticeForm.classList.remove('notice__form--disabled');
     disableEachInArray(formFieldsets, false);
     addDrugFeature();
     mapPinMain.removeEventListener('mouseup', activateMap);
   }
+
+  mapPinMain.addEventListener('mousedown', function () {
+    window.removeMapCard();
+    var activePin = document.querySelector('.map__pin--active');
+    if (activePin) {
+      activePin.classList.remove('map__pin--active');
+    }
+  });
 
   function addDrugFeature() {
     mapPinMain.draggable = true;

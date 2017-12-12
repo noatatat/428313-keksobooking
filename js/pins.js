@@ -18,5 +18,15 @@
   for (var j = 0; j < window.ADVERTICEMENT_NUMBER; j++) {
     fragmentPins.appendChild(createMapPin(window.advertisements[j]));
   }
-  mapPinsBlock.appendChild(fragmentPins);
+
+  window.showPins = showPins;
+  function showPins() {
+    mapPinsBlock.appendChild(fragmentPins);
+    var pins = window.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      pin.addEventListener('click', function (evt) {
+        window.showCard(evt, pins);
+      });
+    });
+  }
 })();
