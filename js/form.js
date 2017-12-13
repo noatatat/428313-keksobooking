@@ -34,4 +34,16 @@
       window.adressInput.style.borderColor = defaultBorderColor;
     }
   }
+
+  function getDataSend() {
+    window.noticeForm.reset();
+    window.setFormStartCondition();
+  }
+
+  window.noticeForm.addEventListener('reset', getDataSend);
+
+  window.noticeForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(window.noticeForm), getDataSend, window.utils.showErrorMessage);
+  });
 })();

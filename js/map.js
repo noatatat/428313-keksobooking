@@ -1,6 +1,15 @@
 'use strict';
 
 (function () {
+  window.PIN_WIDTH = 40;
+  window.PIN_HEIGHT = 52;
+  var pinArea = {
+    minX: 300,
+    maxX: 900,
+    minY: 100,
+    maxY: 500
+  };
+
   function disableEachInArray(array, flag) {
     array.forEach(function (element) {
       element.disabled = flag;
@@ -13,14 +22,23 @@
   var mapPinMain = window.mapBlock.querySelector('.map__pin--main');
   window.noticeForm = document.querySelector('.notice__form');
 
-  mapPinMain.addEventListener('click', activateMap);
+  mapPinMain.addEventListener('mouseup', activateMap);
   function activateMap() {
     window.mapBlock.classList.remove('map--faded');
+    window.showPins();
     window.noticeForm.classList.remove('notice__form--disabled');
     disableEachInArray(formFieldsets, false);
     addDrugFeature();
     mapPinMain.removeEventListener('mouseup', activateMap);
   }
+
+  mapPinMain.addEventListener('mousedown', function () {
+    window.removeMapCard();
+    var activePin = document.querySelector('.map__pin--active');
+    if (activePin) {
+      activePin.classList.remove('map__pin--active');
+    }
+  });
 
   function addDrugFeature() {
     mapPinMain.draggable = true;
@@ -56,21 +74,12 @@
   }
 
   function pinCoordsControl(object) {
-    var minCoordY = window.pinArea.minY - window.PIN_HEIGHT;
-    var maxCoordY = window.pinArea.maxY - window.PIN_HEIGHT;
-    var minCoordX = window.pinArea.minX - window.PIN_WIDTH / 2;
-    var maxCoordX = window.pinArea.maxX - window.PIN_WIDTH / 2;
+    var minCoordY = pinArea.minY - window.PIN_HEIGHT;
+    var maxCoordY = pinArea.maxY - window.PIN_HEIGHT;
+    var minCoordX = pinArea.minX - window.PIN_WIDTH / 2;
+    var maxCoordX = pinArea.maxX - window.PIN_WIDTH / 2;
 
-    object.x = minMax(object.x, minCoordX, maxCoordX);
-    object.y = minMax(object.y, minCoordY, maxCoordY);
-
-    function minMax(coordValue, min, max) {
-      if (coordValue < min) {
-        coordValue = min;
-      } else if (coordValue > max) {
-        coordValue = max;
-      }
-      return coordValue;
-    }
+    object.x = window.utils.minMax(object.x, minCoordX, maxCoordX);
+    object.y = window.utils.minMax(object.y, minCoordY, maxCoordY);
   }
 })();
