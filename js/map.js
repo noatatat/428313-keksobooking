@@ -78,7 +78,6 @@
     var maxCoordY = pinArea.maxY - window.PIN_HEIGHT;
     var minCoordX = pinArea.minX - window.PIN_WIDTH / 2;
     var maxCoordX = pinArea.maxX - window.PIN_WIDTH / 2;
-
     object.x = window.utils.minMax(object.x, minCoordX, maxCoordX);
     object.y = window.utils.minMax(object.y, minCoordY, maxCoordY);
   }
