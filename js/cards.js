@@ -3,7 +3,7 @@
 (function () {
   var OFFER_TYPE_NAMES = {flat: 'Квартира', bungalo: 'Бунгало', house: 'Дом'};
   var mapCardTemplate = document.querySelector('template').content.querySelector('.map__card');
-  var newFeatures = function (nodeName, advertisement) {
+  function newFeatures(nodeName, advertisement) {
     var featureList = nodeName.querySelector('.popup__features');
     var features = nodeName.querySelectorAll('.popup__features .feature');
     var offerFeatures = advertisement.offer.features;
@@ -14,9 +14,9 @@
         featureList.removeChild(feature);
       }
     });
-  };
+  }
 
-  var createMapCard = function (advertisement) {
+  function createMapCard(advertisement) {
     var mapCard = mapCardTemplate.cloneNode(true);
     mapCard.querySelector('h3').textContent = advertisement.offer.title;
     mapCard.querySelector('p small').textContent = advertisement.offer.address;
@@ -28,7 +28,7 @@
     mapCard.querySelector('.popup__avatar').src = advertisement.author.avatar;
     newFeatures(mapCard, advertisement);
     return mapCard;
-  };
+  }
 
   window.placeMapCard = placeMapCard;
   function placeMapCard(index) {
