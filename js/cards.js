@@ -6,14 +6,14 @@
   var newFeatures = function (nodeName, advertisement) {
     var featureList = nodeName.querySelector('.popup__features');
     var features = nodeName.querySelectorAll('.popup__features .feature');
-    for (var k = 0; k < features.length; k++) {
-      if (advertisement.offer.features[k]) {
-        features[k].classList = 'feature feature--' + advertisement.offer.features[k];
-      } else {
-        featureList.removeChild(features[k]);
+    var offerFeatures = advertisement.offer.features;
+    [].forEach.call(features, function (feature) {
+      if (!offerFeatures.some(function (offerFeature) {
+        return feature.classList.contains('feature--' + offerFeature);
+      })) {
+        featureList.removeChild(feature);
       }
-    }
-    return nodeName;
+    });
   };
 
   var createMapCard = function (advertisement) {
