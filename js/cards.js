@@ -35,7 +35,7 @@
   window.placeMapCard = placeMapCard;
   function placeMapCard(index) {
     removeMapCard();
-    var newCard = createMapCard(window.advertisements[index]);
+    var newCard = createMapCard(window.filteredAdvertisement[index]);
     window.mapBlock.insertBefore(newCard, document.querySelector('.map__filters-container'));
   }
 
