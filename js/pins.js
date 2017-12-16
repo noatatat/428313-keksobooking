@@ -45,9 +45,11 @@
   }
 
   function removePins() {
-    var pins = window.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
-    [].forEach.call(pins, function (node) {
-      window.mapBlock.removeChild(node);
-    });
+    var pins = mapPinsBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
+    if (pins) {
+      [].forEach.call(pins, function (node) {
+        mapPinsBlock.removeChild(node);
+      });
+    }
   }
 })();
