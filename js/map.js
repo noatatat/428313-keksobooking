@@ -59,7 +59,7 @@
     pinCoordsControl(coords);
     mapPinMain.style.left = coords.x + 'px';
     mapPinMain.style.top = coords.y + 'px';
-  
+
     window.pinCoords = {
       x: coords.x + window.PIN_WIDTH / 2,
       y: coords.y + window.PIN_HEIGHT
