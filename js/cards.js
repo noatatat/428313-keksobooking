@@ -6,11 +6,13 @@
   function newFeatures(nodeName, advertisement) {
     var featureList = nodeName.querySelector('.popup__features');
     var features = nodeName.querySelectorAll('.popup__features .feature');
-    var offerFeatures = advertisement.offer.features;
+    function isFeatureRelevant(feature) {
+      return advertisement.offer.features.some(function (relevatFeature) {
+        return feature.classList.contains('feature--' + relevatFeature);
+      });
+    }
     [].forEach.call(features, function (feature) {
-      if (!offerFeatures.some(function (offerFeature) {
-        return feature.classList.contains('feature--' + offerFeature);
-      })) {
+      if (!isFeatureRelevant(feature)) {
         featureList.removeChild(feature);
       }
     });

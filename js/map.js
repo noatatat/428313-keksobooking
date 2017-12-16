@@ -10,6 +10,10 @@
     maxY: 500
   };
 
+  window.backend.load(function (data) {
+    window.advertisements = data;
+  }, window.utils.showErrorMessage);
+
   function disableEachInArray(array, flag) {
     array.forEach(function (element) {
       element.disabled = flag;
@@ -25,7 +29,7 @@
   mapPinMain.addEventListener('mouseup', activateMap);
   function activateMap() {
     window.mapBlock.classList.remove('map--faded');
-    window.showPins();
+    window.showPins(window.advertisements);
     window.noticeForm.classList.remove('notice__form--disabled');
     disableEachInArray(formFieldsets, false);
     addDrugFeature();
