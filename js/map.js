@@ -32,6 +32,7 @@
     window.showPins(window.advertisements);
     window.noticeForm.classList.remove('notice__form--disabled');
     disableEachInArray(formFieldsets, false);
+    window.filterPins();
     addDrugFeature();
     mapPinMain.removeEventListener('mouseup', activateMap);
   }
