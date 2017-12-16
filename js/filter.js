@@ -68,9 +68,9 @@
       } else {
         checkedFeatures.forEach(function (feature) {
           if (offerFeatures.includes(feature)) {
-            result = result * 1;
+            result *= 1;
           } else {
-            result = result * 0;
+            result *= 0;
           }
         });
         return result;
