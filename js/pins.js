@@ -30,8 +30,6 @@
     return fragmentPins;
   }
 
-  //var pins = window.mapBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
-
   window.showPins = showPins;
   function showPins(advertisements) {
     removePins();
