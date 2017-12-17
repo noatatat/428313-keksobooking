@@ -36,12 +36,13 @@
 
     function setTypeChange(advertisement) {
       var type = advertisement.offer.type;
-      return (!housingType.options.selectedIndex) || (type === getSelectedValue(housingType));
+      var selectedValue = window.utils.getSelectedValue(housingType);
+      return (!housingType.options.selectedIndex) || (type === selectedValue);
     }
 
     function setPriceChange(advertisement) {
       var price = advertisement.offer.price;
-      switch (getSelectedValue(housingPrice)) {
+      switch (window.utils.getSelectedValue(housingPrice)) {
         case 'low' :
           return price < PRICE_EDGE.LOW;
         case 'middle' :
@@ -55,12 +56,14 @@
 
     function setRoomsChange(advertisement) {
       var rooms = advertisement.offer.rooms.toString();
-      return (!housingRooms.options.selectedIndex) || (rooms === getSelectedValue(housingRooms));
+      var selectedValue = window.utils.getSelectedValue(housingRooms);
+      return (!housingRooms.options.selectedIndex) || (rooms === selectedValue);
     }
 
     function setGuestChange(advertisement) {
       var guests = advertisement.offer.guests.toString();
-      return (!housingGuests.options.selectedIndex) || (guests === getSelectedValue(housingGuests));
+      var selectedValue = window.utils.getSelectedValue(housingGuests);
+      return (!housingGuests.options.selectedIndex) || (guests === selectedValue);
     }
 
     function setFeatureChecked(advertisement) {
@@ -88,9 +91,9 @@
       });
     }
 
-    function getSelectedValue(selectName) {
+/*    function getSelectedValue(selectName) {
       var selectedIndex = selectName.options.selectedIndex;
       return selectName.options[selectedIndex].value;
-    }
+    }*/
   }
 })();

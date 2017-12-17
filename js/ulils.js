@@ -13,6 +13,11 @@
       return selectName.options[optionIndex].value;
     },
 
+    getSelectedValue: function (selectName) {
+      var selectedIndex = selectName.options.selectedIndex;
+      return selectName.options[selectedIndex].value;
+    },
+
     hideOptionsAll: function (selectName) {
       [].forEach.call(selectName, function (option) {
         option.hidden = true;
