@@ -65,7 +65,9 @@
         default:
           error = 'Неизвестный статус: ' + evt.target.status + ' ' + evt.target.statusText;
       }
-      onError(error);
+      if (error) {
+        onError(error);
+      }
     }
   };
 })();
