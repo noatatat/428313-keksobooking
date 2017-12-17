@@ -19,13 +19,13 @@
       });
     },
 
-    hiddenOptionOff: function (selectName, optionIndex) {
+    showHiddenOption: function (selectName, optionIndex) {
       selectName.options[optionIndex].hidden = false;
     },
 
     hideAllOptionsExept: function (selectName, indexExept) {
       window.utils.hideOptionsAll(selectName);
-      window.utils.hiddenOptionOff(selectName, indexExept);
+      window.utils.showHiddenOption(selectName, indexExept);
       selectName.options.selectedIndex = indexExept;
     },
 
