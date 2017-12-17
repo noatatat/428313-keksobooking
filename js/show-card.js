@@ -23,18 +23,19 @@
 
     var closePopup = window.mapBlock.querySelector('.popup__close');
     closePopup.addEventListener('click', onPopupClose);
-
     document.addEventListener('keydown', onPopupEscPress);
-  }
 
-  function onPopupEscPress(escEvt) {
-    if (escEvt.keyCode === window.KEYCODE.ESCAPE) {
-      onPopupClose();
+    function onPopupEscPress(escEvt) {
+      if (escEvt.keyCode === window.KEYCODE.ESCAPE) {
+        onPopupClose();
+      }
     }
-  }
 
-  function onPopupClose() {
-    window.removeMapCard();
-    clickedElement.classList.remove('map__pin--active');
+    function onPopupClose() {
+      window.removeMapCard();
+      clickedElement.classList.remove('map__pin--active');
+      closePopup.removeEventListener('click', onPopupClose);
+      document.removeEventListener('keydown', onPopupEscPress);
+    }
   }
 })();
