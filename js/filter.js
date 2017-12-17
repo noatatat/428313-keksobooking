@@ -2,8 +2,8 @@
 
 (function () {
   var PRICE_EDGE = {
-    low: 10000,
-    middle: 50000
+    LOW: 10000,
+    MIDDLE: 50000
   };
 
   window.filterPins = filterPins;
@@ -43,11 +43,11 @@
       var price = advertisement.offer.price;
       switch (getSelectedValue(housingPrice)) {
         case 'low' :
-          return price < PRICE_EDGE.low;
+          return price < PRICE_EDGE.LOW;
         case 'middle' :
-          return (price >= PRICE_EDGE.low) && (price < PRICE_EDGE.middle);
+          return (price >= PRICE_EDGE.LOW) && (price < PRICE_EDGE.MIDDLE);
         case 'high' :
-          return price >= PRICE_EDGE.middle;
+          return price >= PRICE_EDGE.MIDDLE;
         default :
           return true;
       }
