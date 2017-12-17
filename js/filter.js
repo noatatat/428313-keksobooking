@@ -90,10 +90,5 @@
         return checkbox.value;
       });
     }
-
-/*    function getSelectedValue(selectName) {
-      var selectedIndex = selectName.options.selectedIndex;
-      return selectName.options[selectedIndex].value;
-    }*/
   }
 })();
