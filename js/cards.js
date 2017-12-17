@@ -7,8 +7,8 @@
     var featureList = nodeName.querySelector('.popup__features');
     var features = nodeName.querySelectorAll('.popup__features .feature');
     function isFeatureRelevant(feature) {
-      return advertisement.offer.features.some(function (relevatFeature) {
-        return feature.classList.contains('feature--' + relevatFeature);
+      return advertisement.offer.features.some(function (relevantFeature) {
+        return feature.classList.contains('feature--' + relevantFeature);
       });
     }
     [].forEach.call(features, function (feature) {
