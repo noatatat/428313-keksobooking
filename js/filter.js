@@ -42,16 +42,21 @@
 
     function setPriceChange(advertisement) {
       var price = advertisement.offer.price;
+      var truth;
       switch (window.utils.getSelectedValue(housingPrice)) {
         case 'low' :
-          return price < PRICE_EDGE.LOW;
+          truth = price < PRICE_EDGE.LOW;
+          break;
         case 'middle' :
-          return (price >= PRICE_EDGE.LOW) && (price < PRICE_EDGE.MIDDLE);
+          truth = (price >= PRICE_EDGE.LOW) && (price < PRICE_EDGE.MIDDLE);
+          break;
         case 'high' :
-          return price >= PRICE_EDGE.MIDDLE;
+          truth = price >= PRICE_EDGE.MIDDLE;
+          break;
         default :
-          return true;
+          truth = true;
       }
+      return truth;
     }
 
     function setRoomsChange(advertisement) {
