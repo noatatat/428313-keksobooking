@@ -20,6 +20,10 @@
     filter.addEventListener('change', onFilterChange);
 
     function onFilterChange() {
+      window.debounce(showFilteredPins, 500);
+    }
+
+    function showFilteredPins() {
       window.removeMapCard();
       window.filteredAdvertisements = window.advertisements
           .filter(setTypeChange)
