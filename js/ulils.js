@@ -35,15 +35,24 @@
     },
 
     showErrorMessage: function (errorMessage) {
-      var node = document.createElement('div');
-      node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-      node.style.position = 'absolute';
-      node.style.left = 0;
-      node.style.right = 0;
-      node.style.fontSize = '30px';
-
-      node.textContent = errorMessage;
-      document.body.insertAdjacentElement('afterbegin', node);
+      var fragment = document.createDocumentFragment();
+      var div = document.createElement('div');
+      div.style = 'z-index: 4; ' +
+        'position:fixed; ' +
+        'top: 120px; ' +
+        'left: 50%; ' +
+        'transform: translateX(-50%); ' +
+        'padding: 20px 30px; ' +
+        'border-radius: 5px; ' +
+        'border: 3px solid white; ' +
+        'background-color: rgba(255, 0, 0, 0.6); ' +
+        'box-shadow: 0 0 10px 10px rgba(255, 0, 0, 0.4); ' +
+        'font-weight: bold; ' +
+        'color: #FFFFFF; ' +
+        'text-align: center';
+      div.textContent = errorMessage;
+      fragment.appendChild(div);
+      document.querySelector('main').appendChild(fragment);
     }
   };
 })();
