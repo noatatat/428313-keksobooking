@@ -1,13 +1,11 @@
 'use strict';
 
 (function () {
-  window.PIN_WIDTH = 40;
-  window.PIN_HEIGHT = 52;
+  window.PIN_WIDTH = 0;
+  window.PIN_HEIGHT = 15;
   var PIN_AREA = {
-    MIN_X: 300,
-    MAX_X: 900,
-    MIN_Y: 100,
-    MAX_Y: 500
+    X: {MIN: 50, MAX: 1150},
+    Y: {MIN: 100, MAX: 500}
   };
 
   window.backend.load(function (data) {
@@ -74,10 +72,10 @@
   }
 
   function pinCoordsControl(object) {
-    var minCoordY = PIN_AREA.MIN_Y - window.PIN_HEIGHT;
-    var maxCoordY = PIN_AREA.MAX_Y - window.PIN_HEIGHT;
-    var minCoordX = PIN_AREA.MIN_X - window.PIN_WIDTH / 2;
-    var maxCoordX = PIN_AREA.MAX_X - window.PIN_WIDTH / 2;
+    var minCoordY = PIN_AREA.Y.MIN - window.PIN_HEIGHT;
+    var maxCoordY = PIN_AREA.Y.MAX - window.PIN_HEIGHT;
+    var minCoordX = PIN_AREA.X.MIN - window.PIN_WIDTH / 2;
+    var maxCoordX = PIN_AREA.X.MAX - window.PIN_WIDTH / 2;
     object.x = window.utils.minMax(object.x, minCoordX, maxCoordX);
     object.y = window.utils.minMax(object.y, minCoordY, maxCoordY);
   }
