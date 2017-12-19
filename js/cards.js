@@ -46,7 +46,7 @@
     mapCard.querySelector('p:last-of-type').textContent = advertisement.offer.description;
     mapCard.querySelector('.popup__avatar').src = advertisement.author.avatar;
     insertFeatures(mapCard, advertisement);
-    insertPictures(mapCard, advertisement)
+    insertPictures(mapCard, advertisement);
     return mapCard;
   }
 
