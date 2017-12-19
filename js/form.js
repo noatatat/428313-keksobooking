@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var INVALID_INPUT_BORDER_COLOR = 'red';
   var titleInput = window.noticeForm.querySelector('#title');
   var defaultBorderColor = titleInput.style.borderColor;
   window.adressInput = window.noticeForm.querySelector('#address');
@@ -8,7 +9,7 @@
   window.adressInput.addEventListener('invalid', onAdressValidate);
 
   function onTitleValidate() {
-    titleInput.style.borderColor = 'red';
+    titleInput.style.borderColor = INVALID_INPUT_BORDER_COLOR;
     if (titleInput.validity.tooShort) {
       titleInput.setCustomValidity('Слишком короткий заголовок');
     } else if (titleInput.validity.tooLong) {
@@ -24,7 +25,7 @@
   }
 
   function onAdressValidate() {
-    window.adressInput.style.borderColor = 'red';
+    window.adressInput.style.borderColor = INVALID_INPUT_BORDER_COLOR;
     if (window.adressInput.validity.valueMissing) {
       window.adressInput.setCustomValidity('Обязательное поле');
     } else {
