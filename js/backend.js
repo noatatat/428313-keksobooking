@@ -1,8 +1,12 @@
 'use strict';
 
 (function () {
-  var uploadURL = 'https://1510.dump.academy/keksobooking/';
-  var downloadURL = 'https://1510.dump.academy/keksobooking/data';
+  var URL = {
+    UPLOAD: 'https://1510.dump.academy/keksobooking/',
+    DOWNLOAD: 'https://1510.dump.academy/keksobooking/data'
+  };
+  var CONNECTION_DEFAULT_TIMEOUT = 10000;
+
   window.backend = {
     save: function (data, onLoad, onError) {
       var xhr = new XMLHttpRequest();
@@ -20,9 +24,9 @@
         onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
       });
 
-      xhr.timeout = 10000;
+      xhr.timeout = CONNECTION_DEFAULT_TIMEOUT;
 
-      xhr.open('POST', uploadURL);
+      xhr.open('POST', URL.UPLOAD);
       xhr.send(data);
     },
     load: function (onLoad, onError) {
@@ -42,9 +46,9 @@
         onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
       });
 
-      xhr.timeout = 10000;
+      xhr.timeout = CONNECTION_DEFAULT_TIMEOUT;
 
-      xhr.open('GET', downloadURL);
+      xhr.open('GET', URL.DOWNLOAD);
       xhr.send();
     },
     errorTest: function (evt, onLoad, onError) {
