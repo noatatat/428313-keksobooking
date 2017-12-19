@@ -34,6 +34,16 @@
       selectName.options.selectedIndex = indexExept;
     },
 
+    debounce: function (doThis, timeout) {
+      var lastTimeout;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        doThis();
+      }, timeout);
+    },
+
     showErrorMessage: function (errorMessage) {
       var fragment = document.createDocumentFragment();
       var div = document.createElement('div');

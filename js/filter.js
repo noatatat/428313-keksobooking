@@ -20,7 +20,7 @@
     filter.addEventListener('change', onFilterChange);
 
     function onFilterChange() {
-      window.debounce(showFilteredPins, 500);
+      window.utils.debounce(showFilteredPins, 500);
     }
 
     function showFilteredPins() {
