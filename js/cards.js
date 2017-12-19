@@ -3,6 +3,7 @@
 (function () {
   var OFFER_TYPE_NAMES = {flat: 'Квартира', bungalo: 'Бунгало', house: 'Дом'};
   var mapCardTemplate = document.querySelector('template').content.querySelector('.map__card');
+
   function newFeatures(nodeName, advertisement) {
     var featureList = nodeName.querySelector('.popup__features');
     var features = nodeName.querySelectorAll('.popup__features .feature');
@@ -28,6 +29,21 @@
     mapCard.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
     mapCard.querySelector('p:last-of-type').textContent = advertisement.offer.description;
     mapCard.querySelector('.popup__avatar').src = advertisement.author.avatar;
+
+    var photos = advertisement.offer.photos;
+    var popupPictures = mapCard.querySelector('.popup__pictures');
+    if (!photos.length) {
+      mapCard.removeChild(popupPictures);
+    } else {
+      photos.forEach(function (photo) {
+        var popupPictureElement = popupPictures.children[0].cloneNode(true);
+        popupPictureElement.children[0].src = photo;
+        popupPictureElement.children[0].style = 'max-height: 35px; width: auto; margin-right: 3px';
+        popupPictures.appendChild(popupPictureElement);
+      });
+      popupPictures.removeChild(popupPictures.children[0]);
+    }
+
     newFeatures(mapCard, advertisement);
     return mapCard;
   }
