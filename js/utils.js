@@ -46,7 +46,9 @@
 
     showErrorMessage: function (errorMessage) {
       var fragment = document.createDocumentFragment();
+      var main = document.querySelector('main');
       var div = document.createElement('div');
+      div.classList = 'error-message';
       div.style = 'z-index: 4; ' +
         'position:fixed; ' +
         'top: 120px; ' +
@@ -62,7 +64,10 @@
         'text-align: center';
       div.textContent = errorMessage;
       fragment.appendChild(div);
-      document.querySelector('main').appendChild(fragment);
+      main.appendChild(fragment);
+      setTimeout(function () {
+        main.removeChild(main.querySelector('.error-message'));
+      }, 5000);
     }
   };
 })();
