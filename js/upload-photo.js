@@ -6,7 +6,7 @@
   var avatarUploadInput = window.noticeForm.querySelector('#avatar');
   var avatarImage = window.noticeForm.querySelector('.notice__preview img');
   var photoContainer = window.noticeForm.querySelector('.form__photo-container');
-  var adretisementImageInput = photoContainer.querySelector('#images');
+  var advertisementImageInput = photoContainer.querySelector('#images');
 
   function uploadPhoto(inputField, doThisWhenUpload) {
     inputField.addEventListener('change', function () {
@@ -41,5 +41,5 @@
   }
 
   uploadPhoto(avatarUploadInput, updateAvatar);
-  uploadPhoto(adretisementImageInput, showImage);
+  uploadPhoto(advertisementImageInput, showImage);
 })();
