@@ -38,6 +38,12 @@
   function setFormStartCondition() {
     window.utils.hideAllOptionsExept(capacity, 2);
     capacity.options.selectedIndex = 2;
+    var uploadedImageNodes = window.noticeForm.querySelectorAll('.form__photo-container img');
+    if (uploadedImageNodes) {
+      [].forEach.call(uploadedImageNodes, function (imageNode) {
+        imageNode.parentElement.removeChild(imageNode);
+      });
+    }
   }
   setFormStartCondition();
 
