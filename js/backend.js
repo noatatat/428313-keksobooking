@@ -1,77 +1,70 @@
 'use strict';
 
 (function () {
-  var URL = {
-    UPLOAD: 'https://1510.dump.academy/keksobooking/',
-    DOWNLOAD: 'https://1510.dump.academy/keksobooking/data'
+  var POSTAL_DATA = {
+    UPLOAD: {
+      URL: 'https://1510.dump.academy/keksobooking/',
+      METHOD: 'POST',
+      CONNECTION_DEFAULT_TIMEOUT: 10000
+    },
+    DOWNLOAD: {
+      URL: 'https://1510.dump.academy/keksobooking/data',
+      METHOD: 'GET',
+      CONNECTION_DEFAULT_TIMEOUT: 10000
+    }
   };
-  var CONNECTION_DEFAULT_TIMEOUT = 10000;
+
+  var STATUS_CODE = {
+    OK: 200,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    NOT_FOUND: 404
+  };
 
   window.backend = {
     save: function (data, onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
-
-      xhr.addEventListener('load', function (evt) {
-        window.backend.errorTest(evt, onLoad, onError);
-      });
-
-      xhr.addEventListener('error', function () {
-        onError('Произошла ошибка соединения');
-      });
-
-      xhr.addEventListener('timeout', function () {
-        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-      });
-
-      xhr.timeout = CONNECTION_DEFAULT_TIMEOUT;
-
-      xhr.open('POST', URL.UPLOAD);
-      xhr.send(data);
+      createAndUseXhr(onLoad, onError, POSTAL_DATA.UPLOAD, data);
     },
     load: function (onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-
-      xhr.responseType = 'json';
-
-      xhr.addEventListener('load', function (evt) {
-        window.backend.errorTest(evt, onLoad, onError);
-      });
-
-      xhr.addEventListener('error', function () {
-        onError('Произошла ошибка соединения');
-      });
-
-      xhr.addEventListener('timeout', function () {
-        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-      });
-
-      xhr.timeout = CONNECTION_DEFAULT_TIMEOUT;
-
-      xhr.open('GET', URL.DOWNLOAD);
-      xhr.send();
-    },
-    errorTest: function (evt, onLoad, onError) {
-      var error;
-      switch (evt.target.status) {
-        case 200:
-          onLoad(evt.target.response);
-          break;
-        case 400:
-          error = 'Неверный запрос';
-          break;
-        case 401:
-          error = 'Пользователь не авторизован';
-          break;
-        case 404:
-          error = 'Ничего не найдено';
-          break;
-        default:
-          error = 'Неизвестный статус: ' + evt.target.status + ' ' + evt.target.statusText;
-      }
-      if (error) {
-        onError(error);
-      }
+      createAndUseXhr(onLoad, onError, POSTAL_DATA.DOWNLOAD);
     }
   };
+
+  function createAndUseXhr(onLoad, onError, postalData, data) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.responseType = 'json';
+
+    xhr.addEventListener('load', function (evt) {
+      switch (evt.target.status) {
+        case STATUS_CODE.OK:
+          onLoad(evt.target.response);
+          break;
+        case STATUS_CODE.BAD_REQUEST:
+          onError('Неверный запрос');
+          break;
+        case STATUS_CODE.UNAUTHORIZED:
+          onError('Пользователь не авторизован');
+          break;
+        case STATUS_CODE.NOT_FOUND:
+          onError('Ничего не найдено');
+          break;
+        default:
+          onError('Неизвестный статус: ' + evt.target.status + ' ' + evt.target.statusText);
+      }
+    });
+
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+    });
+
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+    });
+
+    xhr.timeout = postalData.CONNECTION_DEFAULT_TIMEOUT;
+
+    xhr.open(postalData.METHOD, postalData.URL);
+    xhr.send(data);
+  }
 })();
