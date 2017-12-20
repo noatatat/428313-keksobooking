@@ -36,7 +36,7 @@
   function showImage(reader) {
     var img = document.createElement('img');
     img.src = reader.result;
-    img.style = 'max-height: 35px; width: auto; margin-right: 5px';
+    img.style = 'max-height: 35px; width: auto; margin-right: 5px; margin-top: 5px';
     photoContainer.appendChild(img);
   }
 
