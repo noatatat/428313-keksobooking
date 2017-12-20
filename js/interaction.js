@@ -55,12 +55,11 @@
         window.utils.hideAllOptionsExept(capacity, 2);
       }
       if (roomNumber >= 2) {
-        window.utils.hiddenOptionOff(capacity, 1);
+        window.utils.showHiddenOption(capacity, 1);
       }
       if (roomNumber >= 3) {
-        window.utils.hiddenOptionOff(capacity, 0);
+        window.utils.showHiddenOption(capacity, 0);
       }
     }
   }
-
 })();

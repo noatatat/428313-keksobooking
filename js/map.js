@@ -1,14 +1,16 @@
 'use strict';
 
 (function () {
-  window.PIN_WIDTH = 40;
-  window.PIN_HEIGHT = 52;
-  var pinArea = {
-    minX: 300,
-    maxX: 900,
-    minY: 100,
-    maxY: 500
+  window.PIN_WIDTH = 0;
+  window.PIN_HEIGHT = 15;
+  var PIN_AREA = {
+    X: {MIN: 50, MAX: 1150},
+    Y: {MIN: 100, MAX: 500}
   };
+
+  window.backend.load(function (data) {
+    window.advertisements = data;
+  }, window.utils.showErrorMessage);
 
   function disableEachInArray(array, flag) {
     array.forEach(function (element) {
@@ -25,36 +27,28 @@
   mapPinMain.addEventListener('mouseup', activateMap);
   function activateMap() {
     window.mapBlock.classList.remove('map--faded');
-    window.showPins();
+    window.showPins(window.advertisements);
     window.noticeForm.classList.remove('notice__form--disabled');
     disableEachInArray(formFieldsets, false);
-    addDrugFeature();
+    window.filterPins();
     mapPinMain.removeEventListener('mouseup', activateMap);
   }
-
-  mapPinMain.addEventListener('mousedown', function () {
+  var shift = {};
+  mapPinMain.addEventListener('mousedown', function (evt) {
     window.removeMapCard();
     var activePin = document.querySelector('.map__pin--active');
     if (activePin) {
       activePin.classList.remove('map__pin--active');
     }
-  });
-
-  function addDrugFeature() {
-    mapPinMain.draggable = true;
-    mapPinMain.addEventListener('dragstart', onMainPinDragStart);
-  }
-
-  var shift = {};
-  function onMainPinDragStart(evt) {
     shift = {
       x: evt.clientX - mapPinMain.offsetLeft,
       y: evt.clientY - mapPinMain.offsetTop
     };
-    mapPinMain.addEventListener('dragend', onMainPinDragEnd);
-  }
+    document.addEventListener('mousemove', onMainPinMouseMove);
+    document.addEventListener('mouseup', onMainPinMouseUp);
+  });
 
-  function onMainPinDragEnd(endEvt) {
+  function onMainPinMouseMove(endEvt) {
     var coords = {
       x: endEvt.clientX - shift.x,
       y: endEvt.clientY - shift.y
@@ -70,14 +64,18 @@
     };
 
     window.adressInput.value = 'x: ' + window.pinCoords.x + ', y: ' + window.pinCoords.y;
-    mapPinMain.removeEventListener('dragend', onMainPinDragEnd);
+  }
+
+  function onMainPinMouseUp() {
+    document.removeEventListener('mousemove', onMainPinMouseMove);
+    document.removeEventListener('mouseup', onMainPinMouseUp);
   }
 
   function pinCoordsControl(object) {
-    var minCoordY = pinArea.minY - window.PIN_HEIGHT;
-    var maxCoordY = pinArea.maxY - window.PIN_HEIGHT;
-    var minCoordX = pinArea.minX - window.PIN_WIDTH / 2;
-    var maxCoordX = pinArea.maxX - window.PIN_WIDTH / 2;
+    var minCoordY = PIN_AREA.Y.MIN - window.PIN_HEIGHT;
+    var maxCoordY = PIN_AREA.Y.MAX - window.PIN_HEIGHT;
+    var minCoordX = PIN_AREA.X.MIN - window.PIN_WIDTH / 2;
+    var maxCoordX = PIN_AREA.X.MAX - window.PIN_WIDTH / 2;
     object.x = window.utils.minMax(object.x, minCoordX, maxCoordX);
     object.y = window.utils.minMax(object.y, minCoordY, maxCoordY);
   }
