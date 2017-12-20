@@ -34,10 +34,22 @@
       window.showPins(window.filteredAdvertisements);
     }
 
+    function setValueChange(advertisement, option, formInput) {
+      var optionValue = advertisement.offer[option].toString();
+      var selectedValue = window.utils.getSelectedValue(formInput);
+      return (!formInput.options.selectedIndex) || (optionValue === selectedValue);
+    }
+
     function setTypeChange(advertisement) {
-      var type = advertisement.offer.type;
-      var selectedValue = window.utils.getSelectedValue(housingType);
-      return (!housingType.options.selectedIndex) || (type === selectedValue);
+      return setValueChange(advertisement, 'type', housingType);
+    }
+
+    function setRoomsChange(advertisement) {
+      return setValueChange(advertisement, 'rooms', housingRooms);
+    }
+
+    function setGuestChange(advertisement) {
+      return setValueChange(advertisement, 'guests', housingGuests);
     }
 
     function setPriceChange(advertisement) {
@@ -57,18 +69,6 @@
           truth = true;
       }
       return truth;
-    }
-
-    function setRoomsChange(advertisement) {
-      var rooms = advertisement.offer.rooms.toString();
-      var selectedValue = window.utils.getSelectedValue(housingRooms);
-      return (!housingRooms.options.selectedIndex) || (rooms === selectedValue);
-    }
-
-    function setGuestChange(advertisement) {
-      var guests = advertisement.offer.guests.toString();
-      var selectedValue = window.utils.getSelectedValue(housingGuests);
-      return (!housingGuests.options.selectedIndex) || (guests === selectedValue);
     }
 
     function setFeatureChecked(advertisement) {
