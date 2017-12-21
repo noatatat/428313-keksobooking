@@ -4,15 +4,14 @@
   var POSTAL_DATA = {
     UPLOAD: {
       URL: 'https://1510.dump.academy/keksobooking/',
-      METHOD: 'POST',
-      CONNECTION_DEFAULT_TIMEOUT: 10000
+      METHOD: 'POST'
     },
     DOWNLOAD: {
       URL: 'https://1510.dump.academy/keksobooking/data',
-      METHOD: 'GET',
-      CONNECTION_DEFAULT_TIMEOUT: 10000
+      METHOD: 'GET'
     }
   };
+  var CONNECTION_DEFAULT_TIMEOUT = 10000;
 
   var STATUS_CODE = {
     OK: 200,
@@ -62,7 +61,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = postalData.CONNECTION_DEFAULT_TIMEOUT;
+    xhr.timeout = CONNECTION_DEFAULT_TIMEOUT;
 
     xhr.open(postalData.METHOD, postalData.URL);
     xhr.send(data);
