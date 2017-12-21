@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var CONNECTION_DEFAULT_TIMEOUT = 10000;
   var POSTAL_DATA = {
     UPLOAD: {
       URL: 'https://1510.dump.academy/keksobooking/',
@@ -11,8 +12,6 @@
       METHOD: 'GET'
     }
   };
-  var CONNECTION_DEFAULT_TIMEOUT = 10000;
-
   var STATUS_CODE = {
     OK: 200,
     BAD_REQUEST: 400,
