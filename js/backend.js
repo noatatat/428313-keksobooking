@@ -8,7 +8,8 @@
       METHOD: 'POST'
     },
     DOWNLOAD: {
-      URL: 'https://1510.dump.academy/keksobooking/data',
+      //URL: 'https://1510.dump.academy/keksobooking/data',
+      URL: './js/booking.js',
       METHOD: 'GET'
     }
   };
